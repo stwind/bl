@@ -10,11 +10,12 @@ def look_at(obj, target=mu.Vector((0, 0, 0)), track="-Z", up="Y"):
     return obj
 
 
-def import_vdb(D, path, name=None, **kw):
+def import_vdb(D, path, name=None, scale=(1, 1, 1), **kw):
     obj_name = os.path.splitext(os.path.basename(path))[0]
     bpy.ops.object.volume_import(filepath=path, **kw)
     obj = D.objects[obj_name]
     obj.name = name or obj_name
+    obj.scale = scale
     return obj
 
 
