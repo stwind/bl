@@ -8,6 +8,7 @@ from .world import *
 from .image import *
 from .material import *
 from .node_group import *
+from .node_tree import *
 from .mesh import *
 from .object import *
 from .light import *
