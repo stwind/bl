@@ -1,58 +1,10 @@
-import bpy
+from importlib.metadata import version
 
+__version__ = version("bl")
 
-def print(C, *args):
-    for area in C.screen.areas:
-        if area.type != "CONSOLE":
-            continue
-
-        with C.temp_override(area=area):
-            text = " ".join([str(arg) for arg in args])
-            for line in text.split("\n"):
-                bpy.ops.console.scrollback_append(text=line)
-
-
-def setup_scene(
-    scene,
-    size=(640, 360),
-    transparent=False,
-    preview_samples=64,
-    samples=128,
-    use_adaptive_sampling=True,
-    use_denoising=True,
-    pixel_filter_type="BLACKMAN_HARRIS",
-    view_transform="AgX",
-    look="None",
-    display_device="sRGB",
-    max_bounces=12,
-    diffuse_bounces=4,
-    engine="CYCLES",
-    device="GPU",
-):
-    scene.render.engine = engine
-    scene.cycles.device = device
-    scene.cycles.samples = samples
-    scene.cycles.preview_samples = preview_samples
-    scene.cycles.use_adaptive_sampling = use_adaptive_sampling
-    scene.cycles.use_denoising = use_denoising
-    scene.cycles.pixel_filter_type = pixel_filter_type
-    scene.cycles.max_bounces = max_bounces
-    scene.cycles.diffuse_bounces = diffuse_bounces
-    scene.render.image_settings.compression = 0
-    scene.render.resolution_x = size[0]
-    scene.render.resolution_y = size[1]
-    scene.render.filepath = "output.png"
-    scene.render.film_transparent = transparent
-    scene.render.image_settings.color_mode = "RGBA"
-    scene.view_settings.view_transform = view_transform
-    scene.view_settings.look = look
-    scene.display_settings.display_device = display_device
-
-    return scene
-
-
-def setup_cycles(prefs, compute_device_type="OPTIX"):
-    cprefs = prefs.addons["cycles"].preferences
-    cprefs.compute_device_type = compute_device_type
-    for d in cprefs.devices:
-        d.use = d.type == compute_device_type
+from .scene import *
+from .cycles import *
+from .image import *
+from .node_group import *
+from .object import *
+from .util import *
