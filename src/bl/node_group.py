@@ -1,4 +1,4 @@
-def add_node_group(D, name):
+def add(D, name):
     group = D.node_groups.new(name, "GeometryNodeTree")
     group.is_modifier = True
     group.interface.new_socket(
