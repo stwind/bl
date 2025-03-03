@@ -11,6 +11,7 @@ from .node_group import *
 from .node_tree import *
 from .mesh import *
 from .object import *
+from .volume import *
 from .light import *
 from .camera import *
 from .util import *
