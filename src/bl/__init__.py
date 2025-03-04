@@ -12,6 +12,7 @@ from .node_tree import *
 from .mesh import *
 from .object import *
 from .volume import *
+from .curve import *
 from .light import *
 from .camera import *
 from .util import *
