@@ -38,7 +38,7 @@ def get_aabb(mesh):
     return aabb
 
 
-def add(D, name, verts, faces):
+def add(D, name, verts, faces=[], edges=[]):
     mesh = D.meshes.new(name)
-    mesh.from_pydata(verts, [], faces)
+    mesh.from_pydata(verts, edges, faces)
     return mesh
