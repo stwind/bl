@@ -1,4 +1,4 @@
-def add(D, name, use_nodes=True):
+def add(D, name="World", use_nodes=True):
     world = D.worlds.new(name)
     world.use_nodes = use_nodes
     return world
