@@ -9,6 +9,7 @@ from .image import *
 from .material import *
 from .node_group import *
 from .node_tree import *
+from .view_layer import *
 from .mesh import *
 from .object import *
 from .volume import *

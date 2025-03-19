@@ -38,7 +38,15 @@ def get_aabb(mesh):
     return aabb
 
 
-def add(D, name, verts, faces=[], edges=[]):
+def add(D, name, verts, faces=[], edges=[], smooth=True):
     mesh = D.meshes.new(name)
     mesh.from_pydata(verts, edges, faces)
+    if smooth:
+        mesh.shade_smooth()
     return mesh
+
+
+def add_color_attribute(mesh, name, data, type="FLOAT_COLOR", domain="POINT"):
+    attr = mesh.color_attributes.new(name, type, domain)
+    attr.data.foreach_set("color", data.ravel())
+    return attr

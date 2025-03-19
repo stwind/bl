@@ -1,3 +1,7 @@
+from .util import set_attrs
+from .node_tree import add_node, connect
+
+
 def add(D, name, sockets={}):
     group = D.node_groups.new(name, "GeometryNodeTree")
     group.is_modifier = True
@@ -17,7 +21,50 @@ def add(D, name, sockets={}):
         socket = group.interface.new_socket(
             name, in_out=sock["in_out"], socket_type=sock["socket_type"]
         )
-        for k, v in sock.get("attrs", {}).items():
-            setattr(socket, k, v)
+        set_attrs(socket, **sock.get("attrs", {}))
+
+    return group
+
+
+def add_lights(D, coll):
+    group = add(
+        D,
+        "lights",
+        {
+            "Target": {
+                "in_out": "INPUT",
+                "socket_type": "NodeSocketVector",
+                "attrs": {"subtype": "XYZ"},
+            }
+        },
+    )
+    group.links.clear()
+
+    iop = add_node(group, "GeometryNodeInstanceOnPoints", {"Pick Instance": True})
+    ci = add_node(
+        group,
+        "GeometryNodeCollectionInfo",
+        {
+            "Collection": coll,
+            "Separate Children": True,
+            "Reset Children": True,
+        },
+    )
+    pos = add_node(group, "GeometryNodeInputPosition")
+    sub = add_node(group, "ShaderNodeVectorMath", attrs={"operation": "SUBTRACT"})
+    artv = add_node(group, "FunctionNodeAlignRotationToVector")
+
+    connect(
+        group,
+        [
+            (group.nodes["Group Input"].outputs["Geometry"], iop.inputs["Points"]),
+            (iop.outputs["Instances"], group.nodes["Group Output"].inputs["Geometry"]),
+            (ci.outputs["Instances"], iop.inputs["Instance"]),
+            (pos.outputs["Position"], sub.inputs[0]),
+            (group.nodes["Group Input"].outputs["Target"], sub.inputs[1]),
+            (sub.outputs["Vector"], artv.inputs["Vector"]),
+            (artv.outputs["Rotation"], iop.inputs["Rotation"]),
+        ],
+    )
 
     return group

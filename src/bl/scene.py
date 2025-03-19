@@ -1,3 +1,6 @@
+from .util import set_attrs
+
+
 def setup(
     scene,
     size=(640, 360),
@@ -14,9 +17,11 @@ def setup(
     diffuse_bounces=4,
     engine="CYCLES",
     device="GPU",
+    file_format="PNG",
     filepath="output.png",
     color_mode="RGBA",
     compression=0,
+    **kw,
 ):
     scene.render.engine = engine
     scene.cycles.device = device
@@ -32,7 +37,10 @@ def setup(
     scene.render.filepath = filepath
     scene.render.film_transparent = transparent
     scene.render.image_settings.compression = compression
+    scene.render.image_settings.file_format = file_format
     scene.render.image_settings.color_mode = color_mode
     scene.view_settings.view_transform = view_transform
     scene.view_settings.look = look
     scene.display_settings.display_device = display_device
+
+    return set_attrs(scene, **kw)

@@ -10,3 +10,9 @@ def print(C, *args):
             text = " ".join([str(arg) for arg in args])
             for line in text.split("\n"):
                 bpy.ops.console.scrollback_append(text=line)
+
+
+def set_attrs(obj, **kw):
+    for k, v in kw.items():
+        setattr(obj, k, v)
+    return obj

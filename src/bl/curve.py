@@ -1,3 +1,6 @@
+from .util import set_attrs
+
+
 def add(D, lines, name="curve", ctype="CURVE", stype="POLY", cyclic=False, **kw):
     cu = D.curves.new(name, ctype)
     cu.dimensions = "3D"
@@ -8,6 +11,4 @@ def add(D, lines, name="curve", ctype="CURVE", stype="POLY", cyclic=False, **kw)
             spline.points[i].co = (*p, 1)
         spline.use_cyclic_u = cyclic
         spline.use_cyclic_v = cyclic
-    for k, v in kw.items():
-        setattr(cu, k, v)
-    return cu
+    return set_attrs(cu, **kw)
