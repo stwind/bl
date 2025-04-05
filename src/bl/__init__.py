@@ -15,5 +15,6 @@ from .object import *
 from .volume import *
 from .curve import *
 from .light import *
+from .text import *
 from .camera import *
 from .util import *

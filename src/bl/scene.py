@@ -17,6 +17,7 @@ def setup(
     diffuse_bounces=4,
     engine="CYCLES",
     device="GPU",
+    shading_system=False,
     file_format="PNG",
     filepath="output.png",
     color_mode="RGBA",
@@ -32,6 +33,7 @@ def setup(
     scene.cycles.pixel_filter_type = pixel_filter_type
     scene.cycles.max_bounces = max_bounces
     scene.cycles.diffuse_bounces = diffuse_bounces
+    scene.cycles.shading_system = shading_system
     scene.render.resolution_x = size[0]
     scene.render.resolution_y = size[1]
     scene.render.filepath = filepath
