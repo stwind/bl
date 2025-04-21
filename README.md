@@ -14,5 +14,5 @@ pip install -e ".[tests]"
 start blender
 
 ```sh
-BLENDER_SYSTEM_PYTHON=$(pyenv prefix 3.11.11) PYTHONPATH=$(pyenv prefix bl)/lib/python3.11/site-packages /Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env
+BLENDER_SYSTEM_PYTHON=$(pyenv prefix 3.11.11) PYTHONPATH=$(pyenv prefix bl)/lib/python3.11/site-packages:$PYTHONPATH /Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env --python-expr "import site; site.addsitedir('$(pyenv prefix bl)/lib/python3.11/site-packages')"
 ```

@@ -50,3 +50,9 @@ def add_color_attribute(mesh, name, data, type="FLOAT_COLOR", domain="POINT"):
     attr = mesh.color_attributes.new(name, type, domain)
     attr.data.foreach_set("color", data.ravel())
     return attr
+
+
+def add_attribute(mesh, name, data, type="FLOAT", domain="POINT"):
+    attr = mesh.attributes.new(name, type, domain)
+    attr.data.foreach_set("value", data)
+    return attr
