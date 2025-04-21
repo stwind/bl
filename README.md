@@ -7,12 +7,12 @@ Blender tookits
 create virtual env
 
 ```sh
-conda create -y --name bl python=3.11
+pyenv virtualenv 3.11.11 bl
 pip install -e ".[tests]"
 ```
 
 start blender
 
 ```sh
-BLENDER_SYSTEM_PYTHON=$(conda info --base)/envs/bl /Applications/Blender.app/Contents/MacOS/Blender
+BLENDER_SYSTEM_PYTHON=$(pyenv prefix 3.11.11) PYTHONPATH=$(pyenv prefix bl)/lib/python3.11/site-packages /Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env
 ```
