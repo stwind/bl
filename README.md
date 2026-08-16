@@ -7,12 +7,14 @@ Blender tookits
 create virtual env
 
 ```sh
-pyenv virtualenv 3.11.11 bl
-pip install -e ".[tests]"
+uv venv --python 3.13
+
+source .venv/bin/activate
+uv pip install -ve ".[tests,dev]"
 ```
 
 start blender
 
 ```sh
-BLENDER_SYSTEM_PYTHON=$(pyenv prefix 3.11.11) PYTHONPATH=$(pyenv prefix bl)/lib/python3.11/site-packages:$PYTHONPATH /Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env --python-expr "import site; site.addsitedir('$(pyenv prefix bl)/lib/python3.11/site-packages')"
+PYTHONPATH=$VIRTUAL_ENV/lib/python3.13/site-packages:$PYTHONPATH /Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env --env-system-python $(uv python find 3.13) --python-expr "import site; site.addsitedir('$VIRTUAL_ENV/lib/python3.13/site-packages')"
 ```
