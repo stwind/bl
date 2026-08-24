@@ -1,4 +1,4 @@
-def setup(prefs, compute_device_type="OPTIX"):
+def setup(prefs, compute_device_type="CUDA"):
     cprefs = prefs.addons["cycles"].preferences
     cprefs.compute_device_type = compute_device_type
     cprefs.get_devices()
