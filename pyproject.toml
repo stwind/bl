@@ -13,10 +13,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ['numpy>=2.3.4', 'bpy==5.2.0']
+dependencies = ['numpy>=2.3.4']
 
 [project.optional-dependencies]
 tests = ["pytest"]
+bpy = ["bpy>=5.2.0"]
 
 [tool.pytest.ini_options]
 addopts = "-s"

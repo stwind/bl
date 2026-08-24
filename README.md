@@ -10,7 +10,7 @@ create virtual env
 uv venv --python 3.13
 
 source .venv/bin/activate
-uv pip install -ve ".[tests,dev]"
+uv pip install -ve "."
 ```
 
 start blender
