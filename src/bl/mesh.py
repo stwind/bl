@@ -52,7 +52,58 @@ def add_color_attribute(mesh, name, data, type="FLOAT_COLOR", domain="POINT"):
     return attr
 
 
+PROP_NAME = {
+    "FLOAT": "value",
+    "INT": "value",
+    "INT8": "value",
+    "BOOLEAN": "value",
+    "FLOAT_VECTOR": "vector",
+    "FLOAT2": "vector",
+    "FLOAT_COLOR": "color",
+    "BYTE_COLOR": "color",
+    "QUATERNION": "value",
+    "FLOAT4X4": "value",
+}
+
+
 def add_attribute(mesh, name, data, type="FLOAT", domain="POINT"):
     attr = mesh.attributes.new(name, type, domain)
-    attr.data.foreach_set("value", data)
+    attr.data.foreach_set(PROP_NAME[type], data)
     return attr
+
+
+DATATYPE_SIZE = {
+    "FLOAT": 1,
+    "INT": 1,
+    "INT8": 1,
+    "BOOLEAN": 1,
+    "FLOAT_VECTOR": 3,
+    "FLOAT2": 2,
+    "FLOAT_COLOR": 4,
+    "BYTE_COLOR": 4,
+    "QUATERNION": 4,
+    "FLOAT4X4": 16,
+}
+
+DATATYPE_DTYPE = {
+    "FLOAT": np.float32,
+    "INT": np.int32,
+    "INT8": np.int8,
+    "BOOLEAN": np.bool,
+    "FLOAT_VECTOR": np.float32,
+    "FLOAT2": np.float32,
+    "FLOAT_COLOR": np.float32,
+    "BYTE_COLOR": np.float32,
+    "QUATERNION": np.float32,
+    "FLOAT4X4": np.float32,
+}
+
+
+def get_attribute_data(mesh, name):
+    attr = mesh.attributes[name]
+    data_type = attr.data_type
+    data = np.zeros(
+        DATATYPE_SIZE[data_type] * len(attr.data), dtype=DATATYPE_DTYPE[data_type]
+    )
+    attr.data.foreach_get(PROP_NAME[data_type], data)
+    return data
