@@ -18,3 +18,4 @@ from .light import *
 from .text import *
 from .camera import *
 from .util import *
+from .osl import *
