@@ -12,6 +12,7 @@ float norm(float x, float a, float b) { return (x - a) / (b - a); }
 float satnorm(float x, float a,float b) { return clamp(norm(x,a,b), 0.0, 1.0); }
 float aastep0(float x, float w) { return satnorm(x, w - .5, w + .5); }
 float triangle(float x) { return .5 - abs(fract(x) - .5); }
+vector grad(float x) { return vector(Dx(x),Dy(x),0.); }
 
 float contour(float v, float g, float w, float f) {
   return 1 - aastep0(triangle(v * f) / (2 * g * f), w);
